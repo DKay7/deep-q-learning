@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 
 class StatsWriter:
     def __init__(self, config_name, config_file_dir, 
-                 log_level=logging.DEBUG,
-                 graph_update_time_sec=30,
+                 log_level=logging.INFO,
+                 graph_update_time_sec=300,
                  log_filename="run.log", 
                  model_filename="model.pt", 
                  graph_filename="stats.png"):
