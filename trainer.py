@@ -102,12 +102,13 @@ class Trainer:
             self.epsilon = max(self.epsilon * self.epsilon_decay_factor, self.epsilon_min)
             self.save_stats_model(episode, self.agent.model, {"reward": episode_reward, "epsilon": self.epsilon})
             
+
     def train_one_episode(self):
         terminated = False
         total_reward = 0.
         state = self.agent.reset_env()
 
-        while not terminated:
+        while not terminated and total_reward < 100000:
             action = self.agent.get_action_e_greedy(state, self.epsilon)
             new_state, reward, terminated  = self.agent.step(action)
 
