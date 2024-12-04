@@ -50,7 +50,7 @@ class Agent:
 
         while True:
             action = self.get_model_action(state) 
-            
+            # action = self.get_random_action()
             state, _, terminated = self.step(action)
             
             if terminated:

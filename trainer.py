@@ -9,6 +9,7 @@ from copy import deepcopy
 from torch import nn
 import os
 from writer import StatsWriter
+from datetime import datetime, timedelta
 
 
 class Trainer:
@@ -108,8 +109,10 @@ class Trainer:
         terminated = False
         total_reward = 0.
         state = self.agent.reset_env()
+        start_tyme = datetime.now()
+        current_time = datetime.now()
 
-        while not terminated and total_reward < 100000:
+        while not terminated and total_reward < 9999 and (current_time - start_tyme) < timedelta(minutes=10):
             action = self.agent.get_action_e_greedy(state, self.epsilon)
             new_state, reward, terminated  = self.agent.step(action)
 
@@ -117,6 +120,8 @@ class Trainer:
 
             total_reward += reward
             state = new_state
+
+            current_time = datetime.now()
 
         return total_reward
 
