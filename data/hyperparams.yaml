@@ -1,0 +1,12 @@
+cartpole-1:
+  env_id: CartPole-v1
+  seed: 42
+  replay_memory_size: 100000
+  batch_size: 32
+  epsilon_init: 1
+  epsilon_min: 0.05
+  epsilon_decay_factor: 0.99995
+  sync_target_rate: 16
+  gamma_factor: 0.1
+  learning_rate: 0.0001
+
