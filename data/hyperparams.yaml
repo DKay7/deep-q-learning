@@ -6,7 +6,7 @@ cartpole-1:
   epsilon_init: 1
   epsilon_min: 0.05
   epsilon_decay_factor: 0.99995
-  sync_target_rate: 16
-  gamma_factor: 0.1
+  sync_target_rate: 100
+  gamma_factor: 0.99
   learning_rate: 0.0001
 
