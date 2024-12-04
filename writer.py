@@ -54,7 +54,7 @@ class StatsWriter:
         for epoch, stats_dict in stats:
             epoches.append(epoch)
             epsilons.append(stats_dict['epsilon'])
-            rewards.append(stats_dict['reward'])
+            rewards.append(stats_dict['reward'].item())
         
         mean_rewards = np.convolve(np.array(rewards), np.ones(50) / 50, mode='valid')
 
