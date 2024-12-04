@@ -22,7 +22,7 @@ class BaseEncoder(ABC, nn.Module):
 
 
 class FCEncoder(BaseEncoder):
-    def __init__(self, state_dim: tuple[int], embedding_dim=16):
+    def __init__(self, state_dim: tuple[int], embedding_dim=128):
         super(FCEncoder, self).__init__(embedding_dim)
         self.input_fc = nn.Linear(state_dim[0], embedding_dim)
 
@@ -61,7 +61,6 @@ class CNNEncoder(BaseEncoder):
         self.linear_output_size = self.conv3_size[0] * self.conv3_size[1] * self.bn3.num_features
 
         self.output_fc = nn.Linear(self.linear_output_size, embedding_dim)
-        self.to(memory_format=torch.channels_last)
 
     def forward(self, x):
         x = torch.permute(x, (0, 3, 1, 2))
