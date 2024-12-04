@@ -1,14 +1,14 @@
 from torch._dynamo.convert_frame import config
 from agent import Agent
-from model import FCEncoder
+from model import CNNEncoder, FCEncoder
 from trainer import Trainer
 import gymnasium as gym
 import argparse
-
+import ale_py
 
 def play(model_path=None):
-    env = gym.make("CartPole-v1", render_mode="human")
-    agent = Agent(env, FCEncoder)
+    env = gym.make("ALE/Pacman-v5", render_mode="human")
+    agent = Agent(env, CNNEncoder)
 
     if model_path:
         agent.load_model(model_path)
@@ -17,8 +17,8 @@ def play(model_path=None):
 
 
 def train(config):
-    env = gym.make("CartPole-v1")
-    agent = Agent(env, FCEncoder)
+    env = gym.make("ALE/Pacman-v5")
+    agent = Agent(env, CNNEncoder)
     trainer = Trainer(agent, config)
     trainer.train()
 

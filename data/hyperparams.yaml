@@ -9,4 +9,14 @@ cartpole-1:
   sync_target_rate: 100
   gamma_factor: 0.99
   learning_rate: 0.001
-
+packman-1:
+  env_id: ALE/Packman-v5
+  seed: 42
+  replay_memory_size: 100000
+  batch_size: 64
+  epsilon_init: 1
+  epsilon_min: 0.01
+  epsilon_decay_factor: 0.99995
+  sync_target_rate: 5000
+  gamma_factor: 0.997
+  learning_rate: 0.001
