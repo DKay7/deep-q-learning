@@ -53,6 +53,7 @@ class Trainer:
         return all_config[config_name]
 
     def save_stats_model(self, episode, model, stats):
+        stats['reward'] = stats['reward'].cpu().item()
         self.writer.logger.info(f"Episode: {episode}, Reward: {stats['reward']}, Epsilon: {stats['epsilon']}")
         self.stats_per_episode.append((episode, stats))
 

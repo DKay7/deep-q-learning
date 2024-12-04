@@ -4,12 +4,13 @@ import torch
 from datetime import datetime, timedelta
 import numpy as np
 import matplotlib.pyplot as plt
+from multiprocessing import Process
 
 
 class StatsWriter:
     def __init__(self, config_name, config_file_dir, 
                  log_level=logging.INFO,
-                 graph_update_time_sec=300,
+                 graph_update_time_sec=3,
                  log_filename="run.log", 
                  model_filename="model.pt", 
                  graph_filename="stats.png"):
@@ -40,8 +41,11 @@ class StatsWriter:
         self.save_model(model)
 
     def plot_graph_if_needed(self, stats):
-        if datetime.now() - self.last_time_graph_update > timedelta(seconds=self.graph_update_time_sec):
-            self.plot_graph(stats)
+        if datetime.now() - self.last_time_graph_update <= timedelta(seconds=self.graph_update_time_sec):
+            return
+
+        self.last_time_graph_update = datetime.now()
+        Process(target=self.plot_graph, args=(stats,)).start()
 
     def save_model(self, model: torch.nn.Module):
         torch.save(model.state_dict(), self.model_filename)
@@ -54,7 +58,7 @@ class StatsWriter:
         for epoch, stats_dict in stats:
             epoches.append(epoch)
             epsilons.append(stats_dict['epsilon'])
-            rewards.append(stats_dict['reward'].item())
+            rewards.append(stats_dict['reward'])
         
         mean_rewards = np.convolve(np.array(rewards), np.ones(50) / 50, mode='valid')
 
