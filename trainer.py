@@ -112,7 +112,7 @@ class Trainer:
         start_tyme = datetime.now()
         current_time = datetime.now()
 
-        while not terminated and total_reward < 9999 and (current_time - start_tyme) < timedelta(minutes=10):
+        while not terminated and total_reward < 9999 and (current_time - start_tyme) < timedelta(minutes=1):
             action = self.agent.get_action_e_greedy(state, self.epsilon)
             new_state, reward, terminated  = self.agent.step(action)
 
