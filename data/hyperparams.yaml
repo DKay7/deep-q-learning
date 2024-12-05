@@ -13,10 +13,10 @@ packman-1:
   env_id: ALE/Packman-v5
   seed: 42
   replay_memory_size: 100000
-  batch_size: 64
+  batch_size: 32
   epsilon_init: 1
   epsilon_min: 0.01
-  epsilon_decay_factor: 0.99995
-  sync_target_rate: 5000
-  gamma_factor: 0.997
+  epsilon_decay_factor: 0.9995
+  sync_target_rate: 500
+  gamma_factor: 0.99
   learning_rate: 0.001
