@@ -72,7 +72,7 @@ class Trainer:
 
         state, action, new_state, reward, terminated = zip(*batch)
         state = torch.stack(state)
-        action = torch.stack(action)
+        action = torch.stack(action) # TODO: may be error in CNN-mode here
         new_state = torch.stack(new_state)
         reward = torch.stack(reward)
         terminated = torch.stack(terminated).flatten()
