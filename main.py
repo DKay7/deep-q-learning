@@ -5,10 +5,11 @@ from trainer import Trainer
 import gymnasium as gym
 import argparse
 import ale_py
+import flappy_bird_gymnasium
 
 def play(model_path=None):
-    env = gym.make("ALE/Pacman-v5", render_mode="human")
-    agent = Agent(env, CNNEncoder)
+    env = gym.make("FlappyBird-v0",  render_mode="human")
+    agent = Agent(env, FCEncoder)
 
     if model_path:
         agent.load_model(model_path)
@@ -17,8 +18,8 @@ def play(model_path=None):
 
 
 def train(config):
-    env = gym.make("ALE/Pacman-v5")
-    agent = Agent(env, CNNEncoder)
+    env = gym.make("FlappyBird-v0")
+    agent = Agent(env, FCEncoder)
     trainer = Trainer(agent, config)
     trainer.train()
 
