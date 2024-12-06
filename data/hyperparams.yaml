@@ -26,13 +26,37 @@ flappybird-2:
   env_id: FlappyBird-v1
   seed: 42
   replay_memory_size: 100000
+  batch_size: 32
+  epsilon_init: 1
+  epsilon_min: 0.05
+  epsilon_decay_factor: 0.99997
+  sync_target_rate: 500
+  gamma_factor: 0.99
+  learning_rate: 0.0005
+
+flappybird-3:
+  env_id: FlappyBird-v1
+  seed: 42
+  replay_memory_size: 100000
   batch_size: 64
   epsilon_init: 1
   epsilon_min: 0.05
   epsilon_decay_factor: 0.99995
-  sync_target_rate: 50
+  sync_target_rate: 250
   gamma_factor: 0.99
-  learning_rate: 0.0001
+  learning_rate: 0.001
+
+flappybird-no-lidar:
+  env_id: FlappyBird-v1
+  seed: 42
+  replay_memory_size: 100000
+  batch_size: 32
+  epsilon_init: 1
+  epsilon_min: 0.05
+  epsilon_decay_factor: 0.99997
+  sync_target_rate: 500
+  gamma_factor: 0.99
+  learning_rate: 0.0005
 
 packman-1:
   env_id: ALE/Packman-v5

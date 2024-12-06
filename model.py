@@ -22,7 +22,7 @@ class BaseEncoder(ABC, nn.Module):
 
 
 class FCEncoder(BaseEncoder):
-    def __init__(self, state_dim: tuple[int], embedding_dim=512):
+    def __init__(self, state_dim: tuple[int], embedding_dim=256):
         super(FCEncoder, self).__init__(embedding_dim)
         self.input_fc = nn.Linear(state_dim[0], embedding_dim)
 
