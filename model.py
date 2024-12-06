@@ -22,7 +22,7 @@ class BaseEncoder(ABC, nn.Module):
 
 
 class FCEncoder(BaseEncoder):
-    def __init__(self, state_dim: tuple[int], embedding_dim=128):
+    def __init__(self, state_dim: tuple[int], embedding_dim=512):
         super(FCEncoder, self).__init__(embedding_dim)
         self.input_fc = nn.Linear(state_dim[0], embedding_dim)
 
@@ -32,7 +32,7 @@ class FCEncoder(BaseEncoder):
 
 
 class CNNEncoder(BaseEncoder):
-    def __init__(self, image_shape: tuple[int, int, int], embedding_dim:int = 256):
+    def __init__(self, image_shape: tuple[int, int, int], embedding_dim:int = 128):
         def conv2d_out_shape(conv: nn.Conv2d, size: tuple[int, int]):
             kernel_size = conv.kernel_size
             stride = conv.stride
@@ -47,25 +47,19 @@ class CNNEncoder(BaseEncoder):
         # assert image_width == image_height, "CNN only works with square images"
         
         self.conv1 = nn.Conv2d(in_channels, 16, kernel_size=6, stride=1)
-        self.bn1 = nn.BatchNorm2d(16)
 
-        self.conv2 = nn.Conv2d(16, 32, kernel_size=5, stride=2)
-        self.bn2 = nn.BatchNorm2d(32)
-
-        self.conv3 = nn.Conv2d(32, 32, kernel_size=5, stride=2)
+        self.conv3 = nn.Conv2d(16, 32, kernel_size=5, stride=2)
         self.bn3 = nn.BatchNorm2d(32)
         
         self.conv1_size = conv2d_out_shape(self.conv1, (image_width, image_height))
-        self.conv2_size = conv2d_out_shape(self.conv2, self.conv1_size)
-        self.conv3_size = conv2d_out_shape(self.conv3, self.conv2_size)
+        self.conv3_size = conv2d_out_shape(self.conv3, self.conv1_size)
         self.linear_output_size = self.conv3_size[0] * self.conv3_size[1] * self.bn3.num_features
 
         self.output_fc = nn.Linear(self.linear_output_size, embedding_dim)
 
     def forward(self, x):
         x = torch.permute(x, (0, 3, 1, 2))
-        x = f.relu(self.bn1(self.conv1(x)))
-        x = f.relu(self.bn2(self.conv2(x)))
+        x = f.relu(self.conv1(x))
         x = f.relu(self.bn3(self.conv3(x)))
         x = torch.flatten(x, 1)
         x = f.relu(self.output_fc(x))
